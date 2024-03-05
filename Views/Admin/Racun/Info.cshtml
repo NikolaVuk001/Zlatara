@@ -1,0 +1,78 @@
+﻿@model ViewModelRacun
+
+@{
+	ViewData["Title"] = "Informacije O Racunu Racun";
+}
+
+<div class="row text">
+	<div class="col-md-8 offset-2">
+		<p>
+			<h1>Racun Info</h1>
+		</p>
+		<div class="row">
+			<div class="col-md-8 offset-2">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Racun ID</th>
+                            <th>Datum</th>
+                            <th>Radnik User</th>
+                            <th>PIB</th>
+                            <th>Ukupna Vrednost Racuna</th>
+                        </tr>
+                    </thead>
+                    @foreach (Racun r in Model.Racuni)
+                    {
+                        <tr>
+                            <td>@r.RacunId</td>
+                            <td>@r.Datum</td>
+                            <td>@r.RadnikUser</td>
+                            @if(r.Pib == null)
+                            {
+                                <td>X</td>
+                            }
+                            else
+                            {
+                                <td>@r.Pib</td>
+                            }
+                            
+                            <td>@r.Cena</td>                                                        							
+                        </tr>
+                    }                    
+                </table>                
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Br.</th>
+                            <th>Artikal ID</th>
+                            <th>Artikal Naziv</th>
+                            <th>Kolicina</th>
+                            <th>Cena</th>
+                            <th>Ukupna Vrednost</th>
+                        </tr>
+                    </thead>
+                    @foreach (StavkaRacuna s in Model.StavkeRacuna)
+                    {
+                        <tr>
+                            <td>@s.RedinBroj</td>
+                            <td>@s.ArtikalId</td>
+                            <td>
+                            <a class="" asp-controller="Artikal" asp-action="Info" asp-route-id="@s.ArtikalId">
+                            @s.Artikal.NazivArtikla
+                            </a>
+                            </td>
+                            <td>@s.Kolicina</td>
+                            <td>@s.JedCena</td>
+                            <td>@s.UkupnaVred</td>                            
+                        </tr>
+                    }
+                </table>
+                <a class=" btn btn-outline-primary float-end" asp-action="Index">Nazad</a>
+			</div>
+            
+
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,62 @@
+﻿@* Define model *@
+@model IEnumerable<StorniranRacun>
+
+@* Define ViewData *@
+@{
+	ViewData["Title"] = "Lista Racuna";
+}
+
+@* Write Code *@
+<div class="row">
+	<div class="col-8 offset-md-2">
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>@Html.DisplayNameFor(model => model.RacunId)</th>
+					<th>@Html.DisplayNameFor(model => model.Datum)</th>
+					<th>@Html.DisplayNameFor(model => model.RadnikUser)</th>
+					<th>@Html.DisplayNameFor(model => model.Cena)</th>
+					<th>@Html.DisplayNameFor(model => model.Pib)</th>
+					<th>@Html.DisplayNameFor(model => model.MenadzerUser)</th>
+					<th>@Html.DisplayNameFor(model => model.DatumStorniranja)</th>
+
+					
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td class="align-middle">
+							@Html.DisplayFor(modelItem => item.RacunId)
+						</td>
+						<td class="align-middle">
+							@Html.DisplayFor(modelItem => item.Datum)
+						</td>
+						<td class="align-middle">
+							@Html.DisplayFor(modelItem => item.RadnikUser)
+						</td>
+						<td class="align-middle">
+							@Html.DisplayFor(modelItem => item.Cena)
+						</td>
+						<td class="align-middle">
+							@Html.DisplayFor(modelItem => item.Pib)
+						</td>
+						<td class="align-middle">
+							@Html.DisplayFor(modelItem => item.MenadzerUser)
+						</td>
+						<td class="align-middle">
+							@Html.DisplayFor(modelItem => item.DatumStorniranja)
+						</td>
+					</tr>
+				}
+
+			</tbody>
+
+
+		</table>
+
+
+	</div>
+</div>

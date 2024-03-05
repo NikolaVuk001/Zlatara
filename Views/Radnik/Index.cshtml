@@ -1,0 +1,141 @@
+﻿@* Define model *@
+@model IEnumerable<Artikal>
+
+
+@* Define ViewData *@
+@{
+	ViewData["Title"] = "Prodaja";
+}
+
+
+
+<div class="row">
+@*Odeljak Za Filter Artikala*@
+	<div class="col offset-md-2">
+		<h1>Filter</h1>
+		<form asp-action="Filter" asp-controller="Prodaja" method="post">
+
+
+			<div class="form-group">
+				<label class="control-label">Artikal ID</label>
+				<input type="text" class="form-control" type="text" name="id" />
+			</div>
+
+
+			<div class="form-group">
+				<label class="control-label">Naziv Artikla</label>
+				<input class="form-control" type="text" value="" name="naziv" />
+
+			</div>
+
+			<div class="form-group">
+				<label class="control-label">Materijal</label>
+				<input class="form-control" type="text" name="materijal" />
+
+			</div>
+
+			<div class="form-group">
+				<label class="control-label">Cena</label>
+				<input class="form-control" type="text" name="cena" />
+
+			</div>
+
+			<div class="form-group dropdown" style="padding-top:10px">
+				<label class="control-label">Kategorija</label>				
+
+				<select name="kategorija" asp-items="ViewBag.ListaKategorija" class="form-select">
+					<option disabled selected>Izaberi Kategoriju</option>
+					<option value="prazan">Sve Kategorije</option>
+				</select>
+			</div>
+
+
+			<div class="form-group">
+				<label class="control-label">Gramaza</label>
+				<input class="form-control" type="text" name="gramaza" />
+
+			</div>
+
+			<div class="form-group dropdown" style="padding-top:10px">
+				<label class="control-label">Brend</label>		
+				<select name="Brend" asp-items="ViewBag.ListaBrendova" class="form-select">
+					<option disabled selected>Izaberi Brend</option>
+					<option value="prazan">Nebrenirano</option>
+				</select>
+			</div>
+
+
+
+			<div class="form-group pt-3 align-content-center">
+
+
+				<input type="submit" value="Pretraga" class="btn btn-outline-success float-end" id="pretraga" asp-controller="Prodaja" asp-action="Filter" />
+				<input type="submit" value="Svi Artikli" class="btn btn-outline-info float-end" style="margin-left: 10px; margin-right:10px" asp-action="Index" asp-controller="Prodaja" id="Sve" />
+			</div>
+
+
+		</form>
+	</div>
+@*Odeljak A*@
+	<div class="col offset-md-2">
+		<h1>AAAAA</h1>
+	</div>
+</div>
+@*Odeljak Sa Artikal Karticama*@
+
+
+
+
+<div class="row">
+	@*Odeljak Za Kartice Artikle*@
+	<div class="col offset-md-2">
+		<div class="row my-3">
+			
+
+
+		@foreach (var item in Model)
+		{
+			<div class="col-lg-4 col-md-6 pb-4 filter">
+				<div class="card bg-white rounded shadow-sm" style="border:1px solid #222">
+					<div class="card-body pb-1 row">
+						<div class="col-8 h5">@item.NazivArtikla</div>
+						<div class="col-4 text-end"><span class="text-info h5">@item.Cena Din</span></div>
+						
+					</div>
+						<div class="col text-start px-3"><span class="text-info p">Artikal ID: @item.ArtikalId</span></div>
+						<div class="col text-start px-3"><span class="text-info p">Kolicina Na Stanju: @item.KolicinaNaStanju</span></div>
+					<div class="card-body p-1 px-3 row">
+						<div class="col-6 p-1 border-0">
+							<span class="badge p-2 border w-100 bg-info ">@item.Materijal</span>
+						</div>
+						<div class="col-6 border-0">
+							<span class="badge p-2 border w-100 bg-info ">@item.Gramaza grama</span>
+						</div>
+							<div class="col-6 p-1">
+							<span class="badge p-2 border w-100 text-dark bg-warning ">@item.Kategorija.Naziv</span>
+						</div>
+							<div class="col-6 border-0 p-1">
+								<span class="badge p-2 border w-100 bg-info ">@Html.DisplayFor(modelItem => item.Brend.Naziv)</span>
+						</div>
+
+						<div class="col-12 pt-2" style="font-size:13px; text-align:justify">
+							<p> @item.Opis</p>
+						</div>
+						<div class="col-12 p-1">
+							<a class="btn btn-dark form-control btn-sm p-2" style="height:40px">Dodaj U Korpu</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		}
+
+	</div>
+</div>
+@*Odeljak A*@
+	<div class="col offset-md-2">
+		<h1>AAAAA</h1>
+
+	</div>
+
+
+</div>

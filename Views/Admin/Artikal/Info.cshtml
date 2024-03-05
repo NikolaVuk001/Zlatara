@@ -1,0 +1,85 @@
+﻿@model Artikal
+
+@{
+	ViewData["Title"] = "Informacije o Artiklu";
+}
+
+<div class="row text">
+	<div class="col-md-8 offset-2">
+		<p>
+			<h1>Info za @Model.NazivArtikla</h1>
+		</p>
+		<div class="row">
+			<div class="col-md-8 offset-2">
+
+
+
+
+				<div class="form-group">
+					<label asp-for="ArtikalId" class="control-label">Artikal ID</label>
+					<input asp-for="ArtikalId" class="form-control" readonly />
+					<span asp-validation-for="ArtikalId" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="NazivArtikla" class="control-label">Naziv Artikla</label>
+					<input asp-for="NazivArtikla" class="form-control" readonly />
+					<span asp-validation-for="NazivArtikla" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="Materijal" class="control-label">Materijal</label>
+					<input asp-for="Materijal" class="form-control" readonly />
+					<span asp-validation-for="Materijal" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="Cena" class="control-label">Cena</label>
+					<input asp-for="Cena" class="form-control" readonly />
+					<span asp-validation-for="Cena" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="KolicinaNaStanju" class="control-label">Kolicina Na Stanju</label>
+					<input asp-for="KolicinaNaStanju" class="form-control" readonly />
+					<span asp-validation-for="KolicinaNaStanju" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="KategorijaId" class="control-label">Kategorija</label>
+					<input asp-for="Kategorija.Naziv" class="form-control" readonly />
+					<span asp-validation-for="KategorijaId" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="Opis" class="control-label">Opis</label>
+					<textarea asp-for="Opis" class="form-control" readonly></textarea>
+					<span asp-validation-for="Opis" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="Gramaza" class="control-label">Gramaza</label>
+					<input asp-for="Gramaza" class="form-control" readonly />
+					<span asp-validation-for="Gramaza" class="text-danger"></span>
+				</div>
+
+				<div class="form-group">
+					<label asp-for="BrendId" class="control-label">Brend</label>
+					<input asp-for="Brend.Naziv" class="form-control" readonly />
+					<span asp-validation-for="BrendId" class="text-danger"></span>
+				</div>
+
+				
+
+
+				<div class="form-group pt-3">
+					<a class=" btn btn-outline-secondary" asp-action="Index">Prikazi Sve</a>
+					<a class="btn btn-outline-success float-end" asp-action="Izmeni" asp-route-id="@Model.ArtikalId">Izmeni</a>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</div>

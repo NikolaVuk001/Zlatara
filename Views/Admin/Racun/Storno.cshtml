@@ -1,0 +1,52 @@
+﻿@model Racun
+
+@{
+	ViewData["Title"] = "Storniraj Racun";
+}
+
+<div class="row text">
+	<div class="col-md-8 offset-2">
+		<p>
+			<h1>Storno Racun</h1>
+		</p>
+		<div class="row">
+			<div class="col-md-8 offset-2">
+				<form asp-action="Storno" method="post">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+					<div class="form-group">
+						<label asp-for="RacunId" class="control-label">Racun ID</label>
+						<input asp-for="RacunId" class="form-control" readonly />
+					</div>
+
+					
+					<div class="form-group">
+						<label asp-for="Datum" class="control-label">Datum</label>
+						<input asp-for="Datum" class="form-control" />						
+					</div>
+
+					<div class="form-group">
+						<label asp-for="RadnikUser" class="control-label">Radnik User</label>
+						<input asp-for="RadnikUser" class="form-control" />						
+					</div>
+
+					<div class="form-group">
+						<label asp-for="Cena" class="control-label">Ukupna Vrednost</label>
+						<input asp-for="Cena" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label asp-for="Pib" class="control-label">PIB</label>
+						<input asp-for="Pib" class="form-control" />
+					</div>
+
+					<div class="form-group pt-3">
+						<a class=" btn btn-outline-secondary" asp-action="Index">Prikazi Sve</a>
+						<input type="submit" value="Storniraj" class="btn btn-outline-danger float-end" />
+					</div>
+				</form>
+			</div>
+
+		</div>
+
+	</div>
+</div>

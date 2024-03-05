@@ -1,0 +1,83 @@
+﻿@model Artikal
+
+@{
+	ViewData["Title"] = "Azuriraj Artikal";
+}
+
+<div class="row text">
+	<div class="col-md-8 offset-2">
+		<p>
+			<h1>Izmeni Artikal</h1>
+		</p>
+		<div class="row">
+			<div class="col-md-8 offset-2">
+				<form asp-action="Edit">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<input asp-for="ArtikalId" type="hidden"/>
+					<label asp-for="ArtikalId" class="control-label">Artikal ID</label>
+					<input asp-for="ArtikalId" class="form-control" disabled/>
+
+					<div class="form-group">
+						<label asp-for="NazivArtikla" class="control-label">Naziv Artikla</label>
+						<input asp-for="NazivArtikla" class="form-control" />
+						<span asp-validation-for="NazivArtikla" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="Materijal" class="control-label">Materijal</label>
+						<input asp-for="Materijal" class="form-control" />
+						<span asp-validation-for="Materijal" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="Cena" class="control-label">Cena</label>
+						<input asp-for="Cena" class="form-control" />
+						<span asp-validation-for="Cena" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="KolicinaNaStanju" class="control-label">Kolicina Na Stanju</label>
+						<input asp-for="KolicinaNaStanju" class="form-control" />
+						<span asp-validation-for="KolicinaNaStanju" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="KategorijaId" class="control-label">Kategorija</label>
+						<select asp-for="KategorijaId" asp-items="ViewBag.ListaKategorija" class="form-select"></select>
+						<span asp-validation-for="KategorijaId" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="Opis" class="control-label">Opis</label>
+						<textarea asp-for="Opis" class="form-control"></textarea>
+						<span asp-validation-for="Opis" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="Gramaza" class="control-label">Gramaza</label>
+						<input asp-for="Gramaza" class="form-control" />
+						<span asp-validation-for="Gramaza" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label asp-for="BrendId" class="control-label">Brend</label>
+						<select asp-for="BrendId" asp-items="ViewBag.ListaBrendova" class="form-select">							
+							<option value="">Nebrenirano</option>
+						</select>
+						<span asp-validation-for="BrendId" class="text-danger"></span>
+					</div>
+
+					
+
+
+					<div class="form-group pt-3">
+						<a class=" btn btn-outline-secondary" asp-action="Index">Prikazi Sve</a>
+						<input type="submit" value="Azuriraj" class="btn btn-outline-success float-end" />
+					</div>
+				</form>
+			</div>
+
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,21 @@
+﻿@if (TempData["Uspeh"] != null)
+{
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/js/toastr.js"></script>
+
+
+	<script type="text/javascript">
+		toastr.success('@TempData["Uspeh"]');
+	</script>
+}
+
+@if (TempData["Error"] != null)
+{
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/js/toastr.js"></script>
+
+
+	<script type="text/javascript">
+		toastr.error('@TempData["Error"]');
+	</script>
+}
