@@ -1,0 +1,172 @@
+﻿@model IEnumerable<Korpa>
+
+@{double? ukRacun = 0;}
+
+
+<style type="text/css">
+body {
+    background-color: #f4f4f4;
+        
+}
+.table {
+    overflow: hidden;
+}
+
+    .table thead tr th {
+        letter-spacing: 0.08rem;
+        font-weight: normal;
+    }
+
+    .table tr td,
+    .table tr th {
+        border: none;
+        text-align: center;
+    }
+
+    .table.activitites thead {
+        border-bottom: 1px solid #54e346;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .table thead {
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .table.activitites {
+        position: relative;
+    }
+
+        .table.activitites thead::after {
+            position: absolute;
+            content: "RECENT ACTIVITIES";
+            background: #FFF;
+            padding: 0px 8px;
+            top: 38px;
+            letter-spacing: 0.08rem;
+            font-size: 0.6rem;
+            color: #54e346;
+            font-weight: 600;
+        }
+
+    .table tbody td.item {
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.2rem;
+        font-weight: 900;
+        text-align: left;
+    }
+
+.table tbody td.item img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.table thead th.header {
+    text-align: left;
+}
+
+
+.table tbody tr:hover {
+    transform: scale(1.004);
+    box-shadow: 2px 2px 10px #a5a5a5;
+    cursor: pointer;
+    overflow: hidden;
+    scroll-behavior: unset;
+}
+
+    .table tbody tr:hover .close {
+        font-size: 1.5rem;
+        opacity: 1;
+    }
+
+        .table tbody tr:hover .close:hover {
+            color: #aaa;
+        }
+
+    .table tbody tr:hover .btn {
+        border: 1px solid #ddd;
+        opacity: 1;
+        background: #fff;
+    }
+
+
+
+.table tbody tr:hover a {
+    visibility: visible;
+}
+
+
+.subtotal {
+    border-bottom-left-radius: 50px;
+    background-color: #ccc;
+}
+
+
+</style>
+<div class="col " style="margin-right:10vw">
+	<h1>Korpa</h1>
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col" class="text-uppercase header">Artikal</th>
+				<th scope="col" class="text-uppercase">Kolicina</th>
+				<th scope="col" class="text-uppercase">Cena</th>
+				<th scope="col" class="text-uppercase">Ukupno</th>
+				<th scope="col" class="text-uppercase"></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{                
+				var ukCena = item.Artikal.Cena * item.Count;
+				ukRacun += ukCena;
+				<tr>
+					<td class="item">
+						<div class="d-flex align-items-start">
+							<div>
+								@item.Artikal.NazivArtikla
+							</div>
+						</div>
+					</td>
+					<td>@item.Count</td>
+					<td class="">
+						@item.Artikal.Cena din
+					</td>
+					<td class="font-weight-bold">
+						@ukCena din
+					</td>
+					<td>
+						<h4>
+                            <input value="@item.ArtikalId" name="id" hidden>
+                            <a class="badge bg-danger rounded-circle btn-lg" asp-action="UkloniIzKorpe" asp-route-id="@item.ArtikalId">  <i class="bi-trash"></i></a>
+						</h4>						
+					</td>
+				</tr>
+
+			}
+		</tbody>
+	</table>
+	<div class="d-flex justify-content-between">
+		<div class="text-muted">
+			
+		</div>
+		<div class="d-flex flex-column justify-content-end align-items-end">
+			<div class="d-flex px-3 pr-md-5 py-1 subtotal">
+				<div class="px-4">Ukupan Racun</div>
+				<div class="h5 font-weight-bold px-md-2">@ukRacun din</div>
+			</div>
+			
+		</div>
+	</div>
+
+    <div class="d-flex justify-content-between">        
+        
+    </div>
+    
+
+
+
+
+</div>

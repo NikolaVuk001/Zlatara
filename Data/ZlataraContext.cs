@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Zlatara.Models;
 
 namespace Zlatara.Data;
 
-public partial class ZlataraContext : DbContext
+public partial class ZlataraContext : IdentityDbContext<IdentityRadnik>
 {
     public ZlataraContext()
     {
@@ -16,33 +18,38 @@ public partial class ZlataraContext : DbContext
     {
     }
 
-    public virtual DbSet<Artikal> Artikals { get; set; }
 
-    public virtual DbSet<Brend> Brends { get; set; }
+	public virtual DbSet<Artikal> Artikals { get; set; }
 
-    public virtual DbSet<Kamenje> Kamenjes { get; set; }
+    public virtual DbSet<Brend> Brends { get; set; }    
 
     public virtual DbSet<Kategorija> Kategorijas { get; set; }
-
-    public virtual DbSet<Menadzer> Menadzers { get; set; }
-
-    public virtual DbSet<OtkupljenArtikal> OtkupljenArtikals { get; set; }
-
-    public virtual DbSet<Racun> Racuns { get; set; }
-
-    public virtual DbSet<Radnik> Radniks { get; set; }
+        
+    public virtual DbSet<Racun> Racuns { get; set; }    
 
     public virtual DbSet<StavkaRacuna> StavkaRacunas { get; set; }
 
-    public virtual DbSet<StorniranRacun> StorniranRacuns { get; set; }
+    public DbSet<StorniranRacun> StorniranRacuns { get; set; }
+    
+    public DbSet<Korpa> Korpas { get; set; }
+    public DbSet<IdentityRadnik> IdentityRadniks { get; set; }
+
+    public DbSet<OtkupArtikal> OtkupArtikals { get; set; }
+    public DbSet<OtkupPredlog> Predlogs { get; set; }
+
+
+
+
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=localhost;Database=Zlatara;Trusted_Connection=True;Trust Server Certificate=True;Encrypt=True;Integrated Security=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Artikal>(entity =>
+
+		base.OnModelCreating(modelBuilder);
+		modelBuilder.Entity<Artikal>(entity =>
         {
             entity.ToTable("Artikal");
 
@@ -51,8 +58,7 @@ public partial class ZlataraContext : DbContext
                 .HasColumnName("artikalID");
             entity.Property(e => e.BrendId).HasColumnName("brendID");
             entity.Property(e => e.Cena).HasColumnName("cena");
-            entity.Property(e => e.Gramaza).HasColumnName("gramaza");
-            entity.Property(e => e.KamenId).HasColumnName("kamenID");
+            entity.Property(e => e.Gramaza).HasColumnName("gramaza");            
             entity.Property(e => e.KategorijaId).HasColumnName("kategorijaID");
             entity.Property(e => e.KolicinaNaStanju).HasColumnName("kolicinaNaStanju");
             entity.Property(e => e.Materijal)
@@ -72,9 +78,7 @@ public partial class ZlataraContext : DbContext
                 .HasForeignKey(d => d.BrendId)
                 .HasConstraintName("FK_Artikal_Brend");
 
-            entity.HasOne(d => d.Kamen).WithMany(p => p.Artikals)
-                .HasForeignKey(d => d.KamenId)
-                .HasConstraintName("FK_Artikal_Kamenje");
+           
 
             entity.HasOne(d => d.Kategorija).WithMany(p => p.Artikals)
                 .HasForeignKey(d => d.KategorijaId)
@@ -93,25 +97,7 @@ public partial class ZlataraContext : DbContext
                 .HasColumnName("naziv");
         });
 
-        modelBuilder.Entity<Kamenje>(entity =>
-        {
-            entity.HasKey(e => e.KamenId);
-
-            entity.ToTable("Kamenje");
-
-            entity.Property(e => e.KamenId)
-                .ValueGeneratedNever()
-                .HasColumnName("kamenID");
-            entity.Property(e => e.Boja)
-                .HasMaxLength(50)
-                .HasColumnName("boja");
-            entity.Property(e => e.Cistoca).HasColumnName("cistoca");
-            entity.Property(e => e.Karataz).HasColumnName("karataz");
-            entity.Property(e => e.Kolcina).HasColumnName("kolcina");
-            entity.Property(e => e.VrstaKamena)
-                .HasMaxLength(50)
-                .HasColumnName("vrstaKamena");
-        });
+        
 
         modelBuilder.Entity<Kategorija>(entity =>
         {
@@ -125,23 +111,7 @@ public partial class ZlataraContext : DbContext
                 .HasColumnName("naziv");
         });
 
-        modelBuilder.Entity<Menadzer>(entity =>
-        {
-            entity.HasKey(e => e.User);
-
-            entity.ToTable("Menadzer");
-
-            entity.Property(e => e.User)
-                .ValueGeneratedNever()
-                .HasColumnName("user");
-            entity.Property(e => e.Ime)
-                .HasMaxLength(50)
-                .HasColumnName("ime");
-            entity.Property(e => e.Password).HasColumnName("password");
-            entity.Property(e => e.Prezime)
-                .HasMaxLength(50)
-                .HasColumnName("prezime");
-        });
+        
 
         modelBuilder.Entity<OtkupljenArtikal>(entity =>
         {
@@ -161,10 +131,7 @@ public partial class ZlataraContext : DbContext
             entity.Property(e => e.RadnikUser).HasColumnName("radnikUser");
             entity.Property(e => e.UkCenaOtkupa).HasColumnName("ukCenaOtkupa");
 
-            entity.HasOne(d => d.RadnikUserNavigation).WithMany(p => p.OtkupljenArtikals)
-                .HasForeignKey(d => d.RadnikUser)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_OtkupljenArtikal_Radnik");
+            
         });
 
         modelBuilder.Entity<Racun>(entity =>
@@ -177,31 +144,12 @@ public partial class ZlataraContext : DbContext
             entity.Property(e => e.Cena).HasColumnName("cena");
             entity.Property(e => e.Datum).HasColumnName("datum");
             entity.Property(e => e.Pib).HasColumnName("PIB");
-            entity.Property(e => e.RadnikUser).HasColumnName("radnikUser");
+            entity.Property(e => e.UserRadnika).HasColumnName("radnikUser");
 
-            entity.HasOne(d => d.RadnikUserNavigation).WithMany(p => p.Racuns)
-                .HasForeignKey(d => d.RadnikUser)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Racun_Radnik");
+           
         });
 
-        modelBuilder.Entity<Radnik>(entity =>
-        {
-            entity.HasKey(e => e.User);
-
-            entity.ToTable("Radnik");
-
-            entity.Property(e => e.User)
-                .ValueGeneratedNever()
-                .HasColumnName("user");
-            entity.Property(e => e.Ime)
-                .HasMaxLength(50)
-                .HasColumnName("ime");
-            entity.Property(e => e.Password).HasColumnName("password");
-            entity.Property(e => e.Prezime)
-                .HasMaxLength(50)
-                .HasColumnName("prezime");
-        });
+       
 
         modelBuilder.Entity<StavkaRacuna>(entity =>
         {
@@ -236,17 +184,8 @@ public partial class ZlataraContext : DbContext
             entity.Property(e => e.DatumStorniranja).HasColumnName("datumStorniranja");
             entity.Property(e => e.MenadzerUser).HasColumnName("menadzerUser");
             entity.Property(e => e.Pib).HasColumnName("PIB");
-            entity.Property(e => e.RadnikUser).HasColumnName("radnikUser");
 
-            entity.HasOne(d => d.MenadzerUserNavigation).WithMany(p => p.StorniranRacuns)
-                .HasForeignKey(d => d.MenadzerUser)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_StorniranRacun_Menadzer");
-
-            entity.HasOne(d => d.RadnikUserNavigation).WithMany(p => p.StorniranRacuns)
-                .HasForeignKey(d => d.RadnikUser)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_StorniranRacun_Radnik");
+          
         });
 
         OnModelCreatingPartial(modelBuilder);

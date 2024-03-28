@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -23,12 +24,13 @@ public partial class Artikal
 
 
 	[Display(Name = "Cena")]
-	[Required(ErrorMessage = "Ovo Polje Je Obavezno!")]
-	public double? Cena { get; set; }
+	[Required(ErrorMessage = "Ovo Polje Je Obavezno!")]	
+	public double Cena { get; set; }
 
 
 	[Display(Name = "Kolicna")]
 	[Required(ErrorMessage = "Ovo Polje Je Obavezno!")]
+	[Range(0, int.MaxValue,ErrorMessage = "Kolicina Ne Moze Biti Manja Od 0")]
 	public int? KolicinaNaStanju { get; set; }
 
 
@@ -54,14 +56,12 @@ public partial class Artikal
 	public int? BrendId { get; set; }
 
 
-	[Display(Name = "Kamen ID")]
-	public int? KamenId { get; set; }
+	
 
 
 
 	public virtual Brend? Brend { get; set; }
 
-	public virtual Kamenje? Kamen { get; set; }
 
 	public virtual Kategorija? Kategorija { get; set; }
 

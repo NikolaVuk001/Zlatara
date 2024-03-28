@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -6,18 +7,21 @@ using System.Dynamic;
 using System.Linq;
 using Zlatara.Data;
 using Zlatara.Models;
+using Zlatara.Role;
 
 namespace Zlatara.Controllers.Admin
 {
-    [BindProperties]    
-    public class ArtikalController : Controller
+    [BindProperties]
+	[Authorize(Roles = SD.MenadzerRole)]    
+	public class ArtikalController : Controller
     {
+        
 
         private readonly ZlataraContext _baza;
 
-        public IEnumerable<Artikal> Artikli { get; set; }
-        public IEnumerable<SelectListItem> ListaKategorija { get; set; }
-		public IEnumerable<SelectListItem> ListaBrendova { get; set; }
+        public IEnumerable<Artikal>? Artikli { get; set; }
+        public static IEnumerable<SelectListItem>? ListaKategorija { get; set; }
+		public static IEnumerable<SelectListItem>? ListaBrendova { get; set; }
 		
 
 		public ArtikalController(ZlataraContext baza)
@@ -62,7 +66,9 @@ namespace Zlatara.Controllers.Admin
         {
             if (!ModelState.IsValid)
             {
-                return View("../Admin/Artikal/Dodaj", artikal);
+				ViewBag.ListaKategorija = ListaKategorija;
+				ViewBag.ListaBrendova = ListaBrendova;
+				return View("../Admin/Artikal/Dodaj", artikal);
             }
             if (_baza.Artikals.ToList().Any(a => a.ArtikalId == artikal.ArtikalId))
             {
@@ -85,7 +91,7 @@ namespace Zlatara.Controllers.Admin
 
             if (artikalDetails == null)
             {
-                return View("../Admin/Artikal/NotFound");
+                return View("NotFound");
             }
             return View("../Admin/Artikal/Info", artikalDetails);
         }
@@ -100,7 +106,7 @@ namespace Zlatara.Controllers.Admin
 
 			if (artikalDetails == null)
             {
-                return View("../Admin/Artikal/NotFound");
+                return View("NotFound");
             }
             return View("../Admin/Artikal/Izmeni", artikalDetails);
         }
@@ -111,7 +117,9 @@ namespace Zlatara.Controllers.Admin
 
             if (!ModelState.IsValid)
             {
-                return View("../Admin/Artikal/Izmeni", artikal);
+				ViewBag.ListaKategorija = ListaKategorija;
+				ViewBag.ListaBrendova = ListaBrendova;
+				return View("../Admin/Artikal/Izmeni", artikal);
             }
 
             _baza.Artikals.Update(artikal);
@@ -130,7 +138,7 @@ namespace Zlatara.Controllers.Admin
 
             if (artikalDetails == null)
             {
-                return View("../Admin/Artikal/NotFound");
+                return View("NotFound");
             }
             return View("../Admin/Artikal/Obrisi", artikalDetails);
         }
@@ -140,7 +148,7 @@ namespace Zlatara.Controllers.Admin
         {
             if (artikal == null)
             {
-                return View("../Admin/Artikal/NotFound");
+                return View("NotFound");
             }
             _baza.Artikals.Remove(artikal);
             await _baza.SaveChangesAsync();

@@ -21,24 +21,24 @@
                             <th>Ukupna Vrednost Racuna</th>
                         </tr>
                     </thead>
-                    @foreach (Racun r in Model.Racuni)
-                    {
+                    
+                    
                         <tr>
-                            <td>@r.RacunId</td>
-                            <td>@r.Datum</td>
-                            <td>@r.RadnikUser</td>
-                            @if(r.Pib == null)
+                            <td>@Model.racun.RacunId</td>
+                            <td>@Model.racun.Datum</td>
+                        <td>@Model.racun.Radnik.Ime  @Model.racun.Radnik.Prezime</td>
+                            @if(Model.racun.Pib == null)
                             {
                                 <td>X</td>
                             }
                             else
                             {
-                                <td>@r.Pib</td>
+                                <td>@Model.racun.Pib</td>
                             }
                             
-                            <td>@r.Cena</td>                                                        							
+                            <td>@Model.racun.Cena</td>                                                        							
                         </tr>
-                    }                    
+                                    
                 </table>                
 
                 <table class="table">

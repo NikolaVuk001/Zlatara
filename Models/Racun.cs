@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
+
 
 namespace Zlatara.Models;
 
 public partial class Racun
 {
-    public int RacunId { get; set; }
-
-    public string RadnikUser { get; set; }
+    
+	public string? RacunId { get; set; }
 
     public DateOnly Datum { get; set; }
 
@@ -15,5 +19,13 @@ public partial class Racun
 
     public int? Pib { get; set; }
 
-    public virtual Radnik RadnikUserNavigation { get; set; } = null!;
+    
+
+    public string UserRadnika { get; set; }
+    
+	[ValidateNever]
+    [ForeignKey("UserRadnika")]
+    public IdentityRadnik Radnik { get; set; }
+
+  
 }

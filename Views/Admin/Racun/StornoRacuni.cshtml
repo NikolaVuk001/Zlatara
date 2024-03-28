@@ -13,13 +13,13 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>@Html.DisplayNameFor(model => model.RacunId)</th>
-					<th>@Html.DisplayNameFor(model => model.Datum)</th>
-					<th>@Html.DisplayNameFor(model => model.RadnikUser)</th>
-					<th>@Html.DisplayNameFor(model => model.Cena)</th>
-					<th>@Html.DisplayNameFor(model => model.Pib)</th>
-					<th>@Html.DisplayNameFor(model => model.MenadzerUser)</th>
-					<th>@Html.DisplayNameFor(model => model.DatumStorniranja)</th>
+					<th>Racun ID</th>
+					<th>Datum</th>
+					<th>Radnik</th>
+					<th>Cena</th>
+					<th>PIB</th>
+					<th>Menadzer User</th>
+					<th>Datum Storniranja</th>
 
 					
 				</tr>
@@ -29,25 +29,25 @@
 				{
 					<tr>
 						<td class="align-middle">
-							@Html.DisplayFor(modelItem => item.RacunId)
+							@item.RacunId
 						</td>
 						<td class="align-middle">
-							@Html.DisplayFor(modelItem => item.Datum)
+							@item.Datum
 						</td>
 						<td class="align-middle">
-							@Html.DisplayFor(modelItem => item.RadnikUser)
+							@item.Radnik.Ime  @item.Radnik.Prezime
 						</td>
 						<td class="align-middle">
-							@Html.DisplayFor(modelItem => item.Cena)
+							@item.Cena
 						</td>
 						<td class="align-middle">
-							@Html.DisplayFor(modelItem => item.Pib)
+							@item.Pib
 						</td>
 						<td class="align-middle">
-							@Html.DisplayFor(modelItem => item.MenadzerUser)
+							@item.MenadzerUser
 						</td>
 						<td class="align-middle">
-							@Html.DisplayFor(modelItem => item.DatumStorniranja)
+							@item.DatumStorniranja
 						</td>
 					</tr>
 				}

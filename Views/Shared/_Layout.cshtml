@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿
+@using Zlatara.Role
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,7 +17,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand">Zlatara</a>
+                <a class="navbar-brand" asp-action="Index">Zlatara</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,26 +25,36 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button">Admin</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="Artikal" asp-action="Index">Artikli</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-controller="Racun" asp-action="Index">Racuni</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-controller="Racun" asp-action="StornoRacuni">Stornirani Racuni</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-controller="Radnik" asp-action="Index">Radnici</a>
-                            </div>
-                        </li>                        
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Prodaja" asp-action="Index">Prodaja</a>
-                        </li>
-                        <li class="nav-item text-end">
-                            <a class="nav-link text-dark" asp-controller="" asp-action="">Logout</a>
-                        </li>
-                        
+                            @if (User.IsInRole(SD.MenadzerRole))
+                            {
+                                <a class="nav-link dropdown-toggle text-dark" data-bs-toggle="dropdown" href="#" role="button">Admin</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-controller="Artikal" asp-action="Index">Artikli</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Racun" asp-action="Index">Racuni</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Racun" asp-action="StornoRacuni">Stornirani Racuni</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Radnik" asp-action="Index">Radnici</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="OtkupAdmin" asp-action="Index">Otkup</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="OtkupAdmin" asp-action="OtkupljeniArtikli">Otkupljeni Artikli</a>
+                                </div>
+                            }
+                           
+                        </li>     
+                        @if (User.IsInRole(SD.RadnikRole) || User.IsInRole(SD.MenadzerRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Prodaja" asp-action="Index">Prodaja</a>                                
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Otkup" asp-action="Index">Otkup</a>
+                            </li>
+                        }
                     </ul>
-
+                    <partial name="_LoginPartial"></partial>
                 </div>
             </div>
         </nav>
@@ -55,7 +68,7 @@
 
     <footer class="border-top footer text-muted fixed-bottom">
         <div class="container">
-            &copy; 2024 - Zlatara3
+            &copy; 2024 - Zlatara
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

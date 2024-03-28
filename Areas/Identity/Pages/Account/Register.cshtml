@@ -1,0 +1,64 @@
+﻿@page
+@using Zlatara.Role
+@model RegisterModel
+
+@{
+	ViewData["Title"] = "Dodaj Novog Radnika";
+}
+
+<div class="row text">
+	<div  class="col-md-8 offset-2">
+		<div class="row">
+			<div class="col-md-8 offset-2">
+				<form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+
+					
+					<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+					<div class="form-group">
+						<label asp-for="Input.Ime">Ime</label>
+						<input asp-for="Input.Ime" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+
+						<span asp-validation-for="Input.Ime" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Input.Prezime">Prezime</label>
+						<input asp-for="Input.Prezime" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+
+						<span asp-validation-for="Input.Prezime" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Input.User">User</label>
+						<input asp-for="Input.User" class="form-control" autocomplete="username" aria-required="true" placeholder="" />
+
+
+					</div>
+					<div class="form-group">
+						<label asp-for="Input.Password">Password</label>
+						<input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="" />
+
+						<span asp-validation-for="Input.Password" class="text-danger"></span>
+					</div>
+					<label>Tip Radnika</label>
+					<div class="form-group py-1 px-1" style="border: 2px solid rgb(203, 202, 202)">
+						<label for="rbUserRole">Menadzer</label>
+						<input type="radio" name="rbUserRole" value="@SD.MenadzerRole"/>
+						<label for="rbUserRole">Radnik</label>
+						<input type="radio" name="rbUserRole" value="@SD.RadnikRole" checked/>						
+					</div>
+					
+
+
+					<div class="form-group pt-3">
+						<a class=" btn btn-outline-secondary" asp-action="Index" asp-controller="Radnik">Nazad</a>
+						<input value="Dodaj Novog Radnika" id="registerSubmit" type="submit" class="btn btn-outline-success float-end">
+					</div>
+
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

@@ -1,6 +1,6 @@
 ﻿@* Define model *@
 @model IEnumerable<Artikal>
-
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @* Define ViewData *@
 @{
@@ -18,7 +18,7 @@
 
 			<div class="form-group">
 				<label class="control-label">Artikal ID</label>
-				<input type="text" class="form-control" type="text" name="id" />
+				<input type="text" class="form-control" name="id" />
 			</div>
 
 
@@ -76,12 +76,16 @@
 
 		</form>
 	</div>
-@*Odeljak A*@
-	<div class="col offset-md-2">
-		<h1>AAAAA</h1>
+@*Odeljak Korpa*@
+	@Html.Partial("_KorpaPartial", ViewData["Korpa"])
+	<div class="d-flex flex-column justify-content-center align-items-end py-3" style="padding-right:10vw;">
+
+		<a asp-action="Placanje" class="btn btn-lg btn-primary w-25"><i class="bi-cart"></i></a>
+
 	</div>
+
 </div>
-@*Odeljak Sa Artikal Karticama*@
+
 
 
 
@@ -93,49 +97,55 @@
 			
 
 
-		@foreach (var item in Model)
-		{
-			<div class="col-lg-4 col-md-6 pb-4 filter">
-				<div class="card bg-white rounded shadow-sm" style="border:1px solid #222">
-					<div class="card-body pb-1 row">
-						<div class="col-8 h5">@item.NazivArtikla</div>
-						<div class="col-4 text-end"><span class="text-info h5">@item.Cena Din</span></div>
-						
-					</div>
-						<div class="col text-start px-3"><span class="text-info p">Artikal ID: @item.ArtikalId</span></div>
-						<div class="col text-start px-3"><span class="text-info p">Kolicina Na Stanju: @item.KolicinaNaStanju</span></div>
-					<div class="card-body p-1 px-3 row">
-						<div class="col-6 p-1 border-0">
-							<span class="badge p-2 border w-100 bg-info ">@item.Materijal</span>
-						</div>
-						<div class="col-6 border-0">
-							<span class="badge p-2 border w-100 bg-info ">@item.Gramaza grama</span>
-						</div>
-							<div class="col-6 p-1">
-							<span class="badge p-2 border w-100 text-dark bg-warning ">@item.Kategorija.Naziv</span>
-						</div>
-							<div class="col-6 border-0 p-1">
-								<span class="badge p-2 border w-100 bg-info ">@Html.DisplayFor(modelItem => item.Brend.Naziv)</span>
-						</div>
+		@foreach (var item in Model.Take(6))
+			{
+				<div class="col-lg-4 col-md-6 pb-4 filter">
+				
+				
+					
+						<div class="card bg-white rounded shadow-sm" style="border:1px solid #222">
+							<div class="card-body pb-1 row">
+								<div class="col-8 h5">@item.NazivArtikla</div>
+								<div class="col-4 text-end"><span class="text-info h5">@item.Cena Din</span></div>
 
-						<div class="col-12 pt-2" style="font-size:13px; text-align:justify">
-							<p> @item.Opis</p>
+							</div>
+							<div class="col text-start px-3"><span class="text-info p">Artikal ID: @item.ArtikalId</span></div>
+							<div class="col text-start px-3"><span class="text-info p">Kolicina Na Stanju: @item.KolicinaNaStanju</span></div>
+							<div class="card-body p-1 px-3 row">
+								<div class="col-6 p-1 border-0">
+									<span class="badge p-2 border w-100 bg-info ">@item.Materijal</span>
+								</div>
+								<div class="col-6 border-0">
+									<span class="badge p-2 border w-100 bg-info ">@item.Gramaza grama</span>
+								</div>
+								<div class="col-6 p-1">
+									<span class="badge p-2 border w-100 text-dark bg-warning ">@item.Kategorija.Naziv</span>
+								</div>
+								<div class="col-6 border-0 p-1">
+									<span class="badge p-2 border w-100 bg-info ">@Html.DisplayFor(modelItem => item.Brend.Naziv)</span>
+								</div>
+
+								<div class="col-12 pt-2" style="font-size:13px; text-align:justify">
+									<p> @item.Opis</p>
+								</div>
+								<div class="col-12 p-1">																		
+									<a asp-action="DodajUKorpu" asp-route-id="@item.ArtikalId" class="btn form-control btn-primary btn-sm p-2" style="height:40px;">Dodaj U Korpu</a>
+								</div>
+							</div>
 						</div>
-						<div class="col-12 p-1">
-							<a class="btn btn-dark form-control btn-sm p-2" style="height:40px">Dodaj U Korpu</a>
-						</div>
-					</div>
+					
+			
 				</div>
-			</div>
+			
 		}
 
 	</div>
 </div>
-@*Odeljak A*@
-	<div class="col offset-md-2">
-		<h1>AAAAA</h1>
+@*Odeljak*@
+
+	<div class="col" style="margin-right:10vw">
+		
 
 	</div>
-
 
 </div>

@@ -1,0 +1,90 @@
+﻿@* Define model *@
+@model IEnumerable<OtkupArtikal>
+
+@* Define ViewData *@
+@{
+	ViewData["Title"] = "Lista Otkupljenih Artikala";
+}
+
+@* Write Code *@
+<div class="row">
+	<div class="col-8 offset-md-2">		
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Materijal</th>
+					<th>Gramaza</th>
+					<th>Finoca</th>
+					<th>Ostecenje</th>
+					<th>Radnik User</th>
+					<th>Datum</th>
+					<th>Otkupna Cena</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td class="align-middle">
+							@item.Id
+						</td>
+						<td class="align-middle">
+							@item.Materijal
+						</td>
+						<td class="align-middle">
+							@item.Gramaza
+						</td>
+						<td class="align-middle">
+							@item.Finoca
+						</td>
+						@switch (item.Ostecenje)
+						{
+							case 0:
+								{
+									<td class="align-middle">Bez Ostecenja</td>
+								}
+								break;
+							case 1:
+								{
+									<td class="align-middle">Malo Ostecenje</td>
+								}
+								break;
+							case 2:
+								{
+									<td class="align-middle">Srednje Ostecenje</td>
+								}
+								break;
+							case 3:
+								{
+									<td class="align-middle">Veliko Ostecenje</td>
+								}
+								break;
+							default:
+								{
+									<td class="align-middle">Nije Naznaceo Ostecenje!</td>
+								}
+								break;
+						}
+						<td class="align-middle">
+							@item.RadnikUser
+						</td>
+						<td class="align-middle">
+							@item.DatumOtkupa
+						</td>
+						<td class="align-middle">
+							@item.ProdajnaCena
+						</td>		
+						
+					</tr>
+				}
+
+			</tbody>
+
+
+		</table>
+
+
+	</div>
+</div>

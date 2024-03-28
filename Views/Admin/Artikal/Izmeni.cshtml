@@ -25,7 +25,10 @@
 
 					<div class="form-group">
 						<label asp-for="Materijal" class="control-label">Materijal</label>
-						<input asp-for="Materijal" class="form-control" />
+						<select asp-for="Materijal" class="form-select">							
+							<option value="Zlato">Zlato</option>
+							<option value="Srebro">Srebro</option>
+						</select>
 						<span asp-validation-for="Materijal" class="text-danger"></span>
 					</div>
 

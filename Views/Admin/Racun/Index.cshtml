@@ -9,15 +9,22 @@
 @* Write Code *@
 <div class="row">
 	<div class="col-8 offset-md-2">
-
+		<a asp-action="Index" class="btn btn-outline-primary">Svi Racuni</a>
+		<div class="text-white float-end">
+			<form asp-action="PronadjiRacun">
+				<input type="text" name="id" id="id" class="form-control-sm " placeholder="Racun ID"/>
+			
+				<button type="submit" class="btn btn-info"><i class="bi-search"></i></button>
+			</form>
+		</div>
 		<table class="table">
 			<thead>
 				<tr>
-					<th>@Html.DisplayNameFor(model => model.RacunId)</th>
-					<th>@Html.DisplayNameFor(model => model.Datum)</th>
-					<th>@Html.DisplayNameFor(model => model.RadnikUser)</th>
-					<th>@Html.DisplayNameFor(model => model.Cena)</th>
-					<th>@Html.DisplayNameFor(model => model.Pib)</th>
+					<th>Racun ID</th>
+					<th>Datum</th>
+					<th>Radnik</th>
+					<th>Cena</th>
+					<th>PIB</th>
 
 					<th>Akcije</th>
 				</tr>
@@ -33,7 +40,7 @@
 							@Html.DisplayFor(modelItem => item.Datum)
 						</td>
 						<td class="align-middle">
-							@Html.DisplayFor(modelItem => item.RadnikUser)
+							@item.Radnik.Ime
 						</td>
 						<td class="align-middle">
 							@Html.DisplayFor(modelItem => item.Cena)

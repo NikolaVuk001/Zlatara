@@ -1,25 +1,30 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Zlatara.Models;
 
-public partial class StorniranRacun
+public class StorniranRacun
 {
-    public int RacunId { get; set; }
+	public string RacunId { get; set; }
 
-    public int MenadzerUser { get; set; }
+	public string MenadzerUser { get; set; }
 
-    public DateOnly Datum { get; set; }
+	public IdentityRadnik Radnik { get; set; }
 
-    public DateOnly DatumStorniranja { get; set; }
+	public DateOnly Datum { get; set; }
 
-    public double Cena { get; set; }
+	public DateOnly DatumStorniranja { get; set; }
 
-    public int? Pib { get; set; }
+	public double Cena { get; set; }
 
-    public string RadnikUser { get; set; }
+	public int? Pib { get; set; }
 
-    public virtual Menadzer MenadzerUserNavigation { get; set; } = null!;
+	public string RadnikUser { get; set; }
 
-    public virtual Radnik RadnikUserNavigation { get; set; } = null!;
+	
+
+
+
 }

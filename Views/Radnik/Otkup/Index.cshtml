@@ -1,0 +1,85 @@
+﻿@model OtkupArtikal;
+
+
+<div class="container">
+	<h1>Filter</h1>
+	<form method="post">
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+		<div class="form-group">
+			<label class="control-label">Materijal</label>			
+			<select asp-for="Materijal" name="Materijal" class="form-select" onchange="materijalPromena(event)">
+				<option value="Zlato">Zlato</option>
+				<option value="Srebro">Srebro</option>
+			</select>			
+		</div>
+
+		<div class="form-group">
+			<label class="control-label">Gramaza</label>
+			<input class="form-control" asp-for="Gramaza" type="text" name="gramaza" />
+			<span asp-validation-for="Gramaza" class="text-danger"></span>
+		</div>
+		
+
+		<div class="form-group">
+			<label class="control-label">Finoca</label>
+			<select asp-for="Finoca" class="form-select" id="finoca">
+				<option value="18k">18k</option>
+				<option value="20k">20k</option>
+				<option value="22k">22k</option>
+				<option value="24k">24k</option>
+			</select>
+			<span asp-validation-for="Finoca" class="text-danger"></span>
+		</div>
+		
+		
+
+		<div class="form-group">
+			<label class="control-label">Ostecenje</label>
+			<select asp-for="Ostecenje" class="form-select" id="finoca">
+				<option value="0">Bez Ostecenja</option>
+				<option value="1">Malo Ostecenje</option>
+				<option value="2">Srednje Ostecenje</option>
+				<option value="3">Veliko Ostecenje</option>
+			</select>
+			<span asp-validation-for="Ostecenje" class="text-danger"></span>
+			
+		</div>
+
+
+		<div class="form-group">
+			<label class="control-label">Predolzena Cena</label>			
+			<input disabled class="form-control w-25" name="predCena" value="@ViewBag.PredCena Dinara" />
+			<input hidden asp-for="ProdajnaCena" id="predCena" value="@ViewBag.PredCena" />
+		</div>
+
+		
+		<div class="form-group pt-3 align-content-center">
+			<button asp-action="ZavrsiOtkup" asp-controller="Otkup" id="zavrsiOtkup" class="btn btn-outline-success float-end" style="margin-left: 10px; margin-right:10px">Zavrsi Otkup</button>
+			<button asp-action="PredloziCenu" asp-controller="Otkup" class="btn btn-outline-info float-end" style="margin-left: 10px; margin-right:10px" type="submit">Predlozi Cenu</button>									
+		</div>
+		
+	</form>
+</div>
+	
+
+<script type="text/javascript">
+	window.onload = function () {
+		if (document.getElementById("predCena").value != 0) {
+			document.getElementById("zavrsiOtkup").disabled = false;
+		}
+		else
+		{
+			document.getElementById("zavrsiOtkup").disabled = true;
+		}
+
+	};
+	function materijalPromena(e) {
+		if (e.target.value == "Zlato") {
+			document.getElementById("finoca").disabled = false;			
+		} if (e.target.value == "Srebro") {
+			document.getElementById("finoca").disabled = true;			
+		}
+	}
+
+	</script>

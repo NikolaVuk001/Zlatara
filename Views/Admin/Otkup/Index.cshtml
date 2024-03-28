@@ -1,0 +1,105 @@
+﻿@* Define model *@
+@model IEnumerable<OtkupPredlog>
+
+@* Define ViewData *@
+@{
+	ViewData["Title"] = "Lista Materijala Za Otkup";
+}
+
+@* Write Code *@
+<div class="row">
+	<div class="col-8 offset-md-2">
+		<form method="post">
+			<table class="table">
+				<thead>
+					<tr>		
+						<th>ID</th>
+						<th>Naziv</th>
+						<th>Finoca</th>
+						<th>Ostecenje</th>
+						<th>Cena Po Gramu</th>
+						<th>Status</th>
+						<th>Akcije</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+
+						<tr>
+							<td>@item.Id</td>
+							<td class="align-middle">
+								@item.Naziv
+							</td>
+							<td class="align-middle">
+								@item.Finoca
+							</td>
+							
+								@switch(item.Ostecenje)
+								{
+									case 0:
+										{
+										<td class="align-middle">Bez Ostecenja</td>
+										}
+										break;
+								case 1:
+									{
+										<td class="align-middle">Malo Ostecenje</td>
+									}
+									break;
+								case 2:
+									{
+										<td class="align-middle">Srednje Ostecenje</td>
+									}
+									break;
+								case 3:
+									{
+										<td class="align-middle">Veliko Ostecenje</td>
+									}
+									break;
+								default:
+									{
+										<td class="align-middle">Nije Naznaceo Ostecenje!</td>
+									}
+									break;
+							}
+							
+							<td class="align-middle">
+								<input asp-for="@item.CenaPoGramu" id="cenaPoGramu" name="cenaPoGramu" value="@item.CenaPoGramu" />
+								<span asp-validation-for="@item.CenaPoGramu" class="text-danger"></span>
+							</td>
+							<td class="align-middle">
+								@if (item.TrenutnoAktivan == true)
+								{
+									<span class="badge-pill bg-success-subtle">Trenutno Otkupljujemo</span>
+								}
+								else
+								{
+									<span class="badge-pill bg-danger-subtle">Trenutno Ne Otkupljujemo</span>
+								}
+							</td>
+							<td class="align-middle">								
+								<button type="submit" asp-action="IzmeniCenu" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="breadcrumb-item bi-pencil"></i> Izmeni Cenu</button>
+								@if(item.TrenutnoAktivan == true)
+								{
+									<button asp-action="NijeZaOtkup" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="breadcrumb-item bi-hand-thumbs-down"></i></button>
+								}
+								else
+								{
+									<button asp-action="ZaOtkup" asp-route-id="@item.Id" class="btn btn-outline-success"><i class="breadcrumb-item bi-hand-thumbs-up"></i></button>
+								}
+
+							</td>
+						</tr>
+					}
+
+				</tbody>
+
+
+			</table>
+		</form>
+		
+
+
+	</div>
+</div>

@@ -1,4 +1,4 @@
-﻿@model Racun
+﻿@model ViewModelRacun
 
 @{
 	ViewData["Title"] = "Storniraj Racun";
@@ -7,40 +7,70 @@
 <div class="row text">
 	<div class="col-md-8 offset-2">
 		<p>
-			<h1>Storno Racun</h1>
+			<h1>Storniraj Racun</h1>
 		</p>
 		<div class="row">
 			<div class="col-md-8 offset-2">
 				<form asp-action="Storno" method="post">
-					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Racun ID</th>
+                                <th>Datum</th>
+                                <th>Radnik User</th>
+                                <th>PIB</th>
+                                <th>Ukupna Vrednost Racuna</th>
+                            </tr>
+                        </thead>
 
-					<div class="form-group">
-						<label asp-for="RacunId" class="control-label">Racun ID</label>
-						<input asp-for="RacunId" class="form-control" readonly />
-					</div>
 
-					
-					<div class="form-group">
-						<label asp-for="Datum" class="control-label">Datum</label>
-						<input asp-for="Datum" class="form-control" />						
-					</div>
+                        <tr>
+                            <td>@Model.racun.RacunId</td>
+                            <td>@Model.racun.Datum</td>
+                            <td>@Model.racun.Radnik.Ime  @Model.racun.Radnik.Prezime</td>
+                            @if (Model.racun.Pib == null)
+                            {
+                                <td>X</td>
+                            }
+                            else
+                            {
+                                <td>@Model.racun.Pib</td>
+                            }
 
-					<div class="form-group">
-						<label asp-for="RadnikUser" class="control-label">Radnik User</label>
-						<input asp-for="RadnikUser" class="form-control" />						
-					</div>
+                            <td>@Model.racun.Cena</td>
+                        </tr>
 
-					<div class="form-group">
-						<label asp-for="Cena" class="control-label">Ukupna Vrednost</label>
-						<input asp-for="Cena" class="form-control" />
-					</div>
-					<div class="form-group">
-						<label asp-for="Pib" class="control-label">PIB</label>
-						<input asp-for="Pib" class="form-control" />
-					</div>
+                    </table>
 
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Br.</th>
+                                <th>Artikal ID</th>
+                                <th>Artikal Naziv</th>
+                                <th>Kolicina</th>
+                                <th>Cena</th>
+                                <th>Ukupna Vrednost</th>
+                            </tr>
+                        </thead>
+                        @foreach (StavkaRacuna s in Model.StavkeRacuna)
+                        {
+                            <tr>
+                                <td>@s.RedinBroj</td>
+                                <td>@s.ArtikalId</td>
+                                <td>
+                                    <a class="" asp-controller="Artikal" asp-action="Info" asp-route-id="@s.ArtikalId">
+                                        @s.Artikal.NazivArtikla
+                                    </a>
+                                </td>
+                                <td>@s.Kolicina</td>
+                                <td>@s.JedCena</td>
+                                <td>@s.UkupnaVred</td>
+                            </tr>
+                        }
+                    </table>
 					<div class="form-group pt-3">
-						<a class=" btn btn-outline-secondary" asp-action="Index">Prikazi Sve</a>
+						<a class=" btn btn-outline-secondary" asp-action="Index">Nazad</a>
 						<input type="submit" value="Storniraj" class="btn btn-outline-danger float-end" />
 					</div>
 				</form>

@@ -1,0 +1,81 @@
+﻿@* Define model *@
+@model IEnumerable<Korpa>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@* Define ViewData *@
+@{
+	ViewData["Title"] = "Placanje";
+}
+
+@{
+	double? ukRacun = 0;
+	foreach (var item in Model)
+	{
+		var ukCena = item.Artikal.Cena * item.Count;
+		ukRacun += ukCena;
+	}
+}
+
+
+<div class="container">
+	<div class="row">
+		<div class="col-6">
+			@Html.Partial("_KorpaPartial", Model)
+		</div>
+		<div class="col">
+			<div class="row">
+				<div class="col-6 pt-5">
+					<button onclick="Gotovina()" class="btn btn-lg btn-primary w-100 ">Gotovina</button>
+					<br />
+					<button class="btn btn-lg btn-primary w-100 mt-3">Kartica</button>
+					<br />
+					<button class="btn btn-lg btn-primary w-100 mt-3">Vaucer</button>
+				</div>
+
+				<div class="col-6 pt-5">
+					<p>
+						<label for="novac">Primljena Gotovina</label>
+						<input name="novac" id="novac" type="text" class="form-control" style="border: 1px solid black;" disabled />
+					</p>
+					<br />
+					<p>
+						<label for="kusur">Kusur</label>
+						<span name="kusur" id="kusur" class="form-control" style="border: 1px solid black;"></span>
+					</p>
+				</div>
+			</div>
+			<div class="row mt-auto">				
+				<a asp-action="ZavrsiRacun" class="btn btn-lg btn-primary w-100 mt-3 ">Zavrsi Racun</a>
+			</div>
+			
+		</div>
+		
+		
+	</div>
+</div>
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
+
+<script type="text/javascript">
+	function Gotovina(inp) {
+		document.getElementById('novac').disabled = false;
+	}
+	window.onload = function () {
+		var ukupno = @ukRacun;
+		var gotovina = document.getElementById('novac');
+		gotovina.onkeyup = gotovina.onpaste = function () {
+			if (this.value.length == 0) {
+				document.getElementById('kusur').innerHTML = '';
+				return;
+			}
+			var number = parseInt(this.value);
+			if (isNaN(number)) return;
+			document.getElementById('kusur').innerHTML = number - ukupno + " Dinara";
+		};
+		gotovina.onkeyup();
+	};
+</script>
